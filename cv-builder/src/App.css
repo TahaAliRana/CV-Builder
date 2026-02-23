@@ -1,0 +1,142 @@
+/* App-level overrides */
+#root {
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Ensure dark mode background covers the whole page */
+.dark body {
+  background-color: #111827;
+  /* gray-900 */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background-color: white !important;
+  }
+
+  .print-container {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  header,
+  .template-selector,
+  button {
+    display: none !important;
+  }
+}
+
+.preview-container {
+  /* This ensures the scaling doesn't affect the scrollable area too much */
+  min-height: calc(297mm * 0.85 + 100px);
+}
+
+.custom-preview-panel {
+  --preview-scale: 0.85;
+}
+
+@media (max-width: 1280px) {
+  .custom-preview-panel {
+    --preview-scale: 0.7;
+  }
+
+  .preview-container {
+    min-height: calc(297mm * 0.7 + 100px);
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-preview-panel {
+    --preview-scale: 0.4;
+  }
+
+  .preview-container {
+    min-height: calc(297mm * 0.4 + 100px);
+  }
+}
+
+.print-container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: white;
+  position: relative;
+  height: auto;
+  overflow: visible !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.print-container * {
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  word-break: normal !important;
+  /* normal is actually better for English to prevent character-level splitting unless needed */
+}
+
+/* Specific fix for long headings */
+.print-container h1,
+.print-container h2,
+.print-container h3,
+.print-container p,
+.print-container span {
+  max-width: 100%;
+}
+
+.print-container section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+  overflow: visible !important;
+  margin-bottom: 1.5rem;
+}
+
+/* Rigid alignment for PDF capture */
+.rigid-flex {
+  display: flex !important;
+  align-items: flex-start !important;
+  /* Changed from center to prevent vertical overlap on multiline */
+  line-height: normal !important;
+  gap: 0.75rem !important;
+}
+
+.icon-container {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+  /* Align with first line of text */
+}
+
+.skill-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: normal !important;
+  /* Allow wrapping of long skill names */
+  line-height: 1.2 !important;
+  padding: 0.25rem 0.75rem !important;
+  min-height: 1.75rem !important;
+}
